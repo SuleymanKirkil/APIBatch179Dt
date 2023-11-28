@@ -23,4 +23,8 @@ public class JsonPlaceHolderTestData {
         return map;
 
     }
+    public static String StringInJson(Integer userId, String title, Boolean completed){
+        return "{ \"userId\": "+userId+", \"title\": \""+title+"\", \"completed\": "+completed+" }";
+    }
 }
+
