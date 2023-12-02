@@ -9,6 +9,7 @@ import pojos.HerokuResponsePojo;
 
 import static io.restassured.RestAssured.given;
 import static junit.framework.TestCase.assertEquals;
+import static utils.ObjectMapperUtils.convertJsonToJava;
 
 public class C01CreateBooking extends HerOkuAppBaseUrl {
  public static int bookingId;
@@ -32,20 +33,20 @@ public class C01CreateBooking extends HerOkuAppBaseUrl {
     Then
         status code is 200
     And
-        body: {
-    "bookingid": 2931,
-    "booking": {
-                "firstname": "Tommy",
-                "lastname": "Hanks",
-                "totalprice": 112,
-                "depositpaid": true,
-                "bookingdates": {
-                    "checkin": "2018-01-01",
-                    "checkout": "2019-01-01"
-                },
-                "additionalneeds": "Breakfast"
-                   }
-                }
+            body: {
+                    "bookingid": 2931,
+                    "booking": {
+                            "firstname": "Tommy",
+                            "lastname": "Hanks",
+                            "totalprice": 112,
+                            "depositpaid": true,
+                            "bookingdates": {
+                                "checkin": "2018-01-01",
+                                "checkout": "2019-01-01"
+                            },
+                    "additionalneeds": "Breakfast"
+                       }
+                    }
      */
 
     @Test
@@ -60,7 +61,8 @@ public class C01CreateBooking extends HerOkuAppBaseUrl {
         Response response = given(spec).body(payLoad).when().post("{first}");
         response.prettyPrint();
 
-        HerokuResponsePojo actualData = response.as(HerokuResponsePojo.class);
+        HerokuResponsePojo actualData=convertJsonToJava(response.asString(),HerokuResponsePojo.class);
+        //HerokuResponsePojo actualData = response.as(HerokuResponsePojo.class);
         assertEquals(200, response.statusCode());
         assertEquals(payLoad.getFirstname(),actualData.getBooking().getFirstname());
         assertEquals(payLoad.getLastname(),actualData.getBooking().getLastname());

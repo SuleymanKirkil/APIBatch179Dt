@@ -7,7 +7,10 @@ import org.junit.runners.Suite;
 @Suite.SuiteClasses( {
         C01CreateBooking.class,
         C02GetBooking.class,
-        C03UpdateBooking.class
+        C03UpdateBooking.class,
+        C04PartiallyUpdateBooking.class,
+        C05DeleteBooking.class,
+        C06GetBookingNegative.class
 
 } )
 public class Runner {

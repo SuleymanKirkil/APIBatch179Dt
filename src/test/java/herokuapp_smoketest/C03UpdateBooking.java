@@ -10,6 +10,7 @@ import java.util.ResourceBundle;
 
 import static herokuapp_smoketest.C01CreateBooking.bookingId;
 import static io.restassured.RestAssured.given;
+import static junit.framework.TestCase.assertEquals;
 
 public class C03UpdateBooking extends HerOkuAppBaseUrl {
  /*
@@ -57,6 +58,17 @@ public class C03UpdateBooking extends HerOkuAppBaseUrl {
 
         Response response = given(spec).body(payLoad).when().put("{first}/{second}");
         response.prettyPrint();
+
+        HerokuPojo actualData = response.as(HerokuPojo.class);
+
+        assertEquals(200,response.statusCode());
+        assertEquals(payLoad.getFirstname(),actualData.getFirstname());
+        assertEquals(payLoad.getLastname(),actualData.getLastname());
+        assertEquals(payLoad.getTotalprice(),actualData.getTotalprice());
+        assertEquals(payLoad.getDepositpaid(),actualData.getDepositpaid());
+        assertEquals(bookingDates.getCheckin(),actualData.getBookingdates().getCheckin());
+        assertEquals(bookingDates.getCheckout(),actualData.getBookingdates().getCheckout());
+        assertEquals(payLoad.getAdditionalneeds(),actualData.getAdditionalneeds());
 
 
 
